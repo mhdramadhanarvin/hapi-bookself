@@ -4,7 +4,7 @@ const FailException = require('./Exceptions/FailException');
 const ErrorException = require('./Exceptions/ErrorException');
 
 const addBookHandler = (request, h) => {
-  try { 
+  try {
     const {
       name,
       year,
@@ -34,13 +34,13 @@ const addBookHandler = (request, h) => {
       finished,
       insertedAt,
       updatedAt,
-    }; 
+    };
 
     if (!name) {
-      throw new FailException("Gagal menambahkan buku. Mohon isi nama buku"); 
+      throw new FailException("Gagal menambahkan buku. Mohon isi nama buku");
     } else if (readPage > pageCount) {
-      throw new FailException("Gagal menambahkan buku. readPage tidak boleh lebih besar dari pageCount"); 
-    } 
+      throw new FailException("Gagal menambahkan buku. readPage tidak boleh lebih besar dari pageCount");
+    }
 
     books.push(newBook);
 
@@ -55,16 +55,16 @@ const addBookHandler = (request, h) => {
           bookId: id,
         },
       });
-      response.code(201); 
+      response.code(201);
       return response;
 
     } else {
       throw new ErrorException("Buku gagal ditambahkan");
     }
-    
-    
-  } catch (error) { 
-    if (error instanceof FailException) { 
+
+
+  } catch (error) {
+    if (error instanceof FailException) {
 
       const response = h.response({
         status: 'fail',
@@ -86,13 +86,26 @@ const addBookHandler = (request, h) => {
   }
 };
 
-const getAllBooksHandler = () => {
-  const { id, name, publisher } = books;
-  console.log(id);
-  return true;
+const getAllBooksHandler = (request, h) => { 
+  let book = books.map(function (element) { 
+    return {
+      id: element.id,
+      name: element.name,
+      publisher: element.publisher
+    }
+  });
+
+  const response = h.response({
+    status: 'success',
+    data: {
+      books: book
+    }
+  });
+  response.code(200);
+  return response; 
 };
 
-module.exports = { 
+module.exports = {
   addBookHandler,
   getAllBooksHandler
 }
