@@ -92,9 +92,8 @@ const getAllBooksHandler = (request, h) => {
   
   let bookFilter = books;
   if (name !== undefined) {
-    bookFilter = bookFilter.filter(function (element) { 
-      return element.name === name; 
-      // return element.name.toLowerCase() === name.toLowerCase();
+    bookFilter = bookFilter.filter(function (element) {  
+      return element.name.toLowerCase().includes(name.toLowerCase())
     });   
   } 
   if (reading !== undefined) {
