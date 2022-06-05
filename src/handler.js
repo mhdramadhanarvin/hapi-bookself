@@ -92,23 +92,24 @@ const getAllBooksHandler = (request, h) => {
   
   let bookFilter = books;
   if (name !== undefined) {
-    bookFilter = books.filter(function (element) { 
-      return element.name === name;
+    bookFilter = bookFilter.filter(function (element) { 
+      return element.name === name; 
+      // return element.name.toLowerCase() === name.toLowerCase();
     });   
   } 
   if (reading !== undefined) {
     let readingStatus = (reading == 0) ? false : true;
-    bookFilter = books.filter(function (element) { 
+    bookFilter = bookFilter.filter(function (element) { 
       return element.reading == readingStatus;
     });  
   } 
   if (finished !== undefined) {
     let finishedStatus = (finished == 0) ? false : true;
-    bookFilter = books.filter(function (element) { 
+    bookFilter = bookFilter.filter(function (element) { 
       return element.finished == finishedStatus;
     }); 
   }   
-
+  
   let book = bookFilter.map(function (element) {
     return {
       id: element.id,
